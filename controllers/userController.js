@@ -20,31 +20,14 @@ updateUser(req,res){User.findOneAndUpdate({_id:req.params.id},
 deleteUser(req,res){User.findOneAndDelete({_id:req.params.id}).then(userData => 
     !userData? res.status(404).json({message:"no matching user"}): res.json({message:'User has been deleted'}))},
 
+addFriend(req,res){User.findOneAndUpdate({_id: req.params.id},{$addToSet:{friends:req.params.friendsId}},{runValidators:true, new:true})
+    .then(userData => !userData ? res.status(404).json({message:'no user matching this id'}): res.json(userData));
+},
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+deleteFriend(req,res){User.findOneAndDelete({_id:req.params.id},{$pull:{friends:req.params.friendsId}},{runValidators: true, new: true})
+    .then(userData => !userData? res.status(404).json({message: 'no user matching this id'}): res.json(userData))
 }
+};
+
+module.exports = userControllers;
 
