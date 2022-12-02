@@ -1,6 +1,6 @@
 const { Thought, User } = require("../models");
 
-const thoughController ={
+const thoughControllers ={
 
 getAllThoughts(req,res){Thought.find().populate({path: 'reactions', select: '-__v'}).then(thoughtData=>res.json(thoughtData))
     .catch(err=>{ console.log(err); res.sendStatus(400)});
@@ -20,14 +20,11 @@ deleteThought(req,res){Thought.findOneAndDelete({_id:req.params.id}).then(though
     .catch(err=> res.json(err));
 },
 
+addReaction(req,res){Thought.findOneAndUpdate({_id: req.params.thoughtId},{$addToSet:{reactions:req.body}},{runValidators: true, new:true}).then(thoughtData=>
+    !thoughtData? res.status(404).json({message:'no thought matches this id'}): res.json(thoughtData))},
 
+deleteReaction(req,res){Thought.findOneAndUpdate({_id:req.params.thoughtId},{$pull: {reactions: {reactionId: req.params.reactionId}}},{runValidators:true, new:true})
+    .then(thoughtData=> !thoughtData? res.status(404).json({message: "no thought matching this id"}):res.json(thoughtData))},
+};
 
-
-
-
-
-
-
-
-
-}
+module.exports=thoughControllers;
