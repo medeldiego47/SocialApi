@@ -17,7 +17,7 @@ updateThought(req,res){Thought.findOneAndUpdate({_id:req.params.id},{$set:req.bo
 
 deleteThought(req,res){Thought.findOneAndDelete({_id:req.params.id}).then(thoughtData => !thoughtData? res.status(404).json({message: 'no thought matches this id'}):res.json(thoughtData) )
     return User.findOneAndUpdate({_id: req.params.userId},{$pull: {thoughts: req.params.id}},{new:true}).then(userData => !userData? res.status(404).json({message: 'no user matches this id'}):res.json(userData))
-    .catch(err=> res.json(err));
+
 },
 
 addReaction(req,res){Thought.findOneAndUpdate({_id: req.params.thoughtId},{$addToSet:{reactions:req.body}},{runValidators: true, new:true}).then(thoughtData=>
