@@ -15,10 +15,10 @@ const reactionSchema= new Schema({
         type:String,
         required:true
     },
-    createdAt:{
-        Type: Date, 
+    createdAt: {
+        type: Date,
         default: Date.now,
-        get: (createdAt) =>moment(createdAt).format(`MMM DD,YYYY [at] hh:mm a`)
+        get: createdAtVal => moment(createdAtVal).format('MMM DD, YYYY [at] hh:mm a')
     },
 }, {
     toJSON: {
@@ -38,7 +38,7 @@ const thoughtSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        get: createdAt => moment(createdAt).format('MMM DD, YYYY [at] hh:mm a')
+        get: createdAtVal => moment(createdAtVal).format('MMM DD, YYYY [at] hh:mm a')
     },
     username: {
         type: String,

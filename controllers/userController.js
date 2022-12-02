@@ -3,7 +3,7 @@ const { Thought, User } = require("../models");
 const userControllers= {
 
 getAllUsers(req,res){
-    User.find().select('__v').then(Users=> res.json(Users)).catch(err=>{console.log(err); res.sendStatus(400)})},
+    User.find().then(Users=> res.json(Users)).catch(err=>{console.log(err); res.sendStatus(400)})},
 
 getUserById(req,res){
     User.findOne({_id: req.params.id}).then(userData=> !userData ?res.status(404).json({message: "no user matches this ID "}): res.json(userData))},
